@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>چوونەژوورەوە - ئامادەیی بەدرخانی کوڕان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(10, 40, 50, 0.7), rgba(10, 30, 40, 0.8)), url('school.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 15px;
+        }
+
+        .glass-card {
+            background: rgba(20, 60, 75, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            color: white;
+        }
+
+        .glass-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #e5e7eb;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            font-size: 14px;
+            color: white;
+            outline: none;
+        }
+
+        .input-group select option {
+            background: #0f172a;
+            color: white;
+        }
+
+        .input-group input::placeholder {
+            color: #d1d5db;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+        .register-link a {
+            color: #38bdf8;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        <h2>چوونەژوورەوە</h2>
+        <form onsubmit="loginUser(event)">
+            <div class="input-group">
+                <label>جۆری بەکارهێنەر</label>
+                <select id="userRole" onchange="toggleStudentFields()">
+                    <option value="student">قوتابی</option>
+                    <option value="teacher">مامۆستا</option>
+                    <option value="admin">بەڕێوەبەر (ئەدمین)</option>
+                </select>
+            </div>
+
+            <!-- بەشە تایبەتەکان بۆ قوتابی (پۆل و لق) -->
+            <div id="studentFields">
+                <div class="input-group">
+                    <label>پۆلی خوێندن</label>
+                    <select id="studentGrade">
+                        <option value="پۆلی 10 (زانستی)">پۆلی 10 زانستی</option>
+                        <option value="پۆلی 10 (وێژەیی)">پۆلی 10 وێژەیی</option>
+                        <option value="پۆلی 11 (زانستی)">پۆلی 11 زانستی</option>
+                        <option value="پۆلی 11 (وێژەیی)">پۆلی 11 وێژەیی</option>
+                        <option value="پۆلی 12 (زانستی)">پۆلی 12 زانستی</option>
+                        <option value="پۆلی 12 (وێژەیی)">پۆلی 12 وێژەیی</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>لقی پۆلەکەت</label>
+                    <select id="studentSection">
+                        <option value="لقی أ">لقی أ</option>
+                        <option value="لقی ب">لقی ب</option>
+                        <option value="لقی ج">لقی ج</option>
+                        <option value="لقی د">لقی د</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>ناوی بەکارهێنەر یان کۆد</label>
+                <input type="text" id="username" placeholder="کۆدی بەکارهێنەر" required>
+            </div>
+            
+            <div class="input-group">
+                <label>وشەی تێپەڕ</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="submit-btn">چوونەژوورەوە</button>
+        </form>
+        <div class="register-link">
+            هەژمارت نییە؟ <a href="register.html">تۆمارکردن</a>
+        </div>
+    </div>
+
+    <script>
+        // پیشاندان یان شاردنەوەی خانەی پۆل و لق بەپێی جۆری بەکارهێنەر
+        function toggleStudentFields() {
+            let role = document.getElementById('userRole').value;
+            let studentFields = document.getElementById('studentFields');
+            if (role === 'student') {
+                studentFields.style.display = 'block';
+            } else {
+                studentFields.style.display = 'none';
+            }
+        }
+
+        function loginUser(event) {
+            event.preventDefault();
+            let role = document.getElementById('userRole').value;
+            localStorage.setItem('currentUserRole', role);
+
+            // ئەگەر قوتابی بوو، پۆل و لقەکەشی پاشەکەوت بکە
+            if (role === 'student') {
+                let grade = document.getElementById('studentGrade').value;
+                let section = document.getElementById('studentSection').value;
+                localStorage.setItem('studentGrade', grade);
+                localStorage.setItem('studentSection', section);
+            }
+
+            window.location.href = 'page1.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داواکارییەکان - ئامادەیی بەدرخانی کوڕان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+        body { min-height: 100vh; background: linear-gradient(rgba(15, 30, 40, 0.75), rgba(10, 20, 30, 0.85)), url('school.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; color: white; }
+        
+        nav { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 15px; border-radius: 16px; max-width: 700px; margin: 10px auto; width: 100%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
+        nav a { color: white; text-decoration: none; padding: 6px 15px; border-radius: 10px; font-weight: 500; font-size: 13px; transition: all 0.3s ease; }
+        nav a:hover, nav a.active { background: rgba(255, 255, 255, 0.25); color: #38bdf8; }
+
+        .main-container { max-width: 850px; width: 100%; margin: auto; padding: 10px 0; }
+        .glass-card { background: rgba(20, 50, 65, 0.65); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 25px 20px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); text-align: center; }
+        h1 { color: #38bdf8; text-align: center; margin-bottom: 20px; font-size: 22px; font-weight: 700; }
+        
+        .box { background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px dashed rgba(255, 255, 255, 0.3); text-align: right; }
+        .box h3 { font-size: 15px; margin-bottom: 10px; color: #fff; }
+        
+        textarea { width: 100%; height: 100px; padding: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; resize: vertical; margin-bottom: 10px; outline: none; font-size: 13px; }
+        textarea::placeholder { color: #cbd5e1; }
+        
+        .btn { background: #38bdf8; color: #0f172a; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
+        .btn:hover { background: #0ea5e9; color: white; }
+        
+        .req-item { background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid #38bdf8; font-size: 13px; text-align: right; }
+        .reply-box { margin-top: 10px; display: flex; gap: 8px; }
+        input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.15); color: white; font-size: 13px; outline: none; }
+        input::placeholder { color: #cbd5e1; }
+        
+        .reply-btn { background: #10b981; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .reply-btn:hover { background: #059669; }
+        
+        footer { text-align: center; padding: 10px; font-size: 12px; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <nav id="mainNav">
+        <a href="page1.html">سەرەکی</a>
+        <a href="page2.html">ئاگادارییەکان</a>
+        <a href="page3.html">خشتەی ڕۆژانە</a>
+        <a href="page4.html">نمرەکان</a>
+        <a href="page5.html" id="page5NavBtn" class="active">داواکارییەکان</a>
+        <a href="index.html" onclick="logoutUser()" style="background: rgba(239, 68, 68, 0.3); color: #f87171;">چوونە دەرەوە</a>
+    </nav>
+    <div class="main-container">
+        <div class="glass-card" id="contentCard">
+            <h1>داواکاری و پەیوەندییەکانی مامۆستایان</h1>
+
+            <!-- بەشی ناردنی داواکاری و تێبینی (بۆ مامۆستا) -->
+            <div class="box" id="teacherSendBox" style="display: none;">
+                <h3>💬 ناردنی داواکاری یان تێبینی بۆ بەڕێوەبەر</h3>
+                <textarea id="teacherRequestNote" placeholder="داواکاری، گۆڕینی وانە، یان هەر تێبینییەکت هەیە لێرە بنووسە..."></textarea>
+                <button class="btn" onclick="sendRequest()">ناردنی نامە</button>
+                <div id="teacherReplyView" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- بەشی بینینی نامەکان و وەڵامدانەوە (بۆ بەڕێوەبەر/ئەدمین) -->
+            <div class="box" id="adminViewBox" style="display: none;">
+                <h3>📥 نامە و داواکارییە گەیشتووەکانی مامۆستایان</h3>
+                <div id="adminRequestsList" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>مافی پارێزراوە &copy; 2026 ئامادەیی بەدرخانی کوڕان</p>
+    </footer>
+
+    <script>
+        function logoutUser() {
+            localStorage.removeItem('currentUserRole');
+            localStorage.removeItem('studentGrade');
+            localStorage.removeItem('studentSection');
+        }
+
+        window.onload = function() {
+            let role = localStorage.getItem('currentUserRole');
+            
+            // ئەگەر قوتابی بوو، رێگری لێدەکەین و ناوهێڵین ئەم پەڕەیە ببینێت
+            if (role === 'student') {
+                document.getElementById('page5NavBtn').style.display = 'none'; // شاردنەوەی لە مۆنیۆ
+                document.getElementById('contentCard').innerHTML = `
+                    <h1 style="color: #f87171;">⛔️ ڕێگەپێدراو نییە!</h1>
+                    <p style="font-size: 14px; color: #cbd5e1; margin-top: 15px;">ئەم پەڕەیە تایبەتە بە مامۆستایان و بەڕێوەبەر. قوتابی دەسەڵاتی دەستکاریکردن یان بینینی ئەم بەشەی نییە.</p>
+                    <a href="page1.html" style="display: inline-block; margin-top: 20px; background: #38bdf8; color: #0f172a; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: bold;">گەڕانەوە بۆ پەڕەی سەرەکی</a>
+                `;
+                return;
+            }
+
+            if (role === 'admin') {
+                document.getElementById('adminViewBox').style.display = 'block';
+                document.getElementById('teacherSendBox').style.display = 'none';
+                loadAdminRequests();
+            } else {
+                document.getElementById('teacherSendBox').style.display = 'block';
+                document.getElementById('adminViewBox').style.display = 'none';
+                loadTeacherReplies();
+            }
+        }
+
+        function sendRequest() {
+            let note = document.getElementById('teacherRequestNote').value.trim();
+            if (!note) { alert('تکایە دەقی داواکارییەکەت بنووسە!'); return; }
+            
+            let teacherName = prompt("ناوی خۆت بنووسە (بۆ نموونە مامۆستا عەلی):") || "مامۆستا";
+            
+            let reqList = JSON.parse(localStorage.getItem('teacherRequestsSystem')) || [];
+            reqList.unshift({ 
+                name: teacherName, 
+                note: note, 
+                reply: "", 
+                date: new Date().toLocaleDateString('ku-IQ') 
+            });
+            
+            localStorage.setItem('teacherRequestsSystem', JSON.stringify(reqList));
+            document.getElementById('teacherRequestNote').value = "";
+            alert('✅ نامەکەت بە سەرکەوتوویی نێردرا بۆ بەڕێوەبەر!');
+            loadTeacherReplies();
+        }
+
+        function loadTeacherReplies() {
+            let reqList = JSON.parse(localStorage.getItem('teacherRequestsSystem')) || [];
+            let view = document.getElementById('teacherReplyView');
+            
+            if (reqList.length === 0) {
+                view.innerHTML = `<p style="font-size: 12px; color: #cbd5e1;">هێشتا هیچ نامەیەکت نەناردووە.</p>`;
+                return;
+            }
+            view.innerHTML = `<h4 style="font-size: 13px; margin-bottom: 8px; color: #38bdf8;">مێژووی نامە و وەڵامەکانت:</h4>` + 
+            reqList.map(item => `
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; text-align: right;">
+                    <p><b>📤 نامەکەت:</b> ${item.note}</p>
+                    <p style="color: ${item.reply ? '#4ade80' : '#f87171'}; margin-top: 4px;"><b>💬 وەڵامی بەڕێوەبەر:</b> ${item.reply || 'چاوەڕێی وەڵام...'}</p>
+                </div>
+            `).join('');
+        }
+
+        function loadAdminRequests() {
+            let list = document.getElementById('adminRequestsList');
+            let reqs = JSON.parse(localStorage.getItem('teacherRequestsSystem')) || [];
+            
+            if (reqs.length === 0) {
+                list.innerHTML = `<p style="font-size: 13px; color: #cbd5e1;">هیچ داواکارییەک لە مامۆستایانەوە نییە.</p>`;
+                return;
+            }
+            
+            list.innerHTML = reqs.map((r, i) => `
+                <div class="req-item">
+                    <p><b>👨‍🏫 مامۆستا:</b> ${r.name}</p>
+                    <p style="margin: 5px 0;"><b>📝 داواکاری/تێبینی:</b> ${r.note}</p>
+                    <p style="color: #38bdf8; margin-bottom: 8px;"><b>💬 وەڵامی ئێستا:</b> ${r.reply || 'هێشتا وەڵام نەدراوەتەوە'}</p>
+                    <div class="reply-box">
+                        <input type="text" id="rep_${i}" placeholder="نووسینی وەڵام بۆ ئەم مامۆستایە...">
+                        <button class="reply-btn" onclick="replyToTeacher(${i})">ناردنی وەڵام</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function replyToTeacher(index) {
+            let inputElement = document.getElementById(`rep_${index}`);
+            if (!inputElement) return;
+            let text = inputElement.value.trim();
+            
+            if (!text) { 
+                alert('تکایە دەقی وەڵام بنووسە!'); 
+                return; 
+            }
+            
+            let reqs = JSON.parse(localStorage.getItem('teacherRequestsSystem')) || [];
+            reqs[index].reply = text;
+            localStorage.setItem('teacherRequestsSystem', JSON.stringify(reqs));
+            
+            alert('✅ وەڵامەکە بە سەرکەوتوویی نێردرا بۆ مامۆستا!');
+            loadAdminRequests();
+        }
+    </script>
+</body>
+</html>

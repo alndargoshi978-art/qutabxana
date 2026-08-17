@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تۆمارکردنی نمرەکان و بەڕێوەبردن - ئامادەیی بەدرخانی کوڕان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+        body { min-height: 100vh; background: linear-gradient(rgba(15, 30, 40, 0.75), rgba(10, 20, 30, 0.85)), url('school.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; color: white; }
+        
+        nav { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 15px; border-radius: 16px; max-width: 700px; margin: 10px auto; width: 100%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
+        nav a { color: white; text-decoration: none; padding: 6px 15px; border-radius: 10px; font-weight: 500; font-size: 13px; transition: all 0.3s ease; }
+        nav a:hover, nav a.active { background: rgba(255, 255, 255, 0.25); color: #38bdf8; }
+
+        .main-container { max-width: 950px; width: 100%; margin: auto; padding: 10px 0; }
+        .glass-card { background: rgba(20, 50, 65, 0.65); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 25px 15px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); margin-bottom: 20px; }
+        .glass-card h1 { font-size: 22px; font-weight: 700; margin-bottom: 15px; color: #38bdf8; text-align: center; }
+        
+        .admin-box { background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px dashed rgba(255, 255, 255, 0.3); }
+        .admin-box h3 { font-size: 14px; margin-bottom: 10px; color: #fff; }
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 10px; }
+        
+        .admin-box input, .admin-box select, .admin-box textarea { width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: white; font-size: 13px; outline: none; }
+        .admin-box select option { background: #0f172a; color: white; }
+        
+        .add-btn { background: #38bdf8; color: #0f172a; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; margin-top: 5px; }
+        .add-btn:hover { background: #0ea5e9; color: white; }
+        
+        .result-card { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(14, 165, 233, 0.4); padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .result-card h3 { color: #38bdf8; font-size: 18px; margin-bottom: 5px; }
+        
+        .teacher-filter-container { background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .teacher-filter-container h3 { font-size: 14px; margin-bottom: 10px; color: #38bdf8; }
+        .teacher-filter-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 10px; }
+        .teacher-filter-container select { width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: white; font-size: 13px; outline: none; }
+        .teacher-filter-container select option { background: #0f172a; color: white; }
+        
+        .filter-btn { background: #10b981; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
+        .filter-btn:hover { background: #059669; }
+        .student-complaint-box { background: rgba(239, 68, 68, 0.12); border: 1px dashed rgba(239, 68, 68, 0.4); padding: 15px; border-radius: 12px; margin-top: 15px; text-align: right; width: 100%; }
+        .student-complaint-box textarea { width: 100%; height: 70px; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: white; font-size: 12px; margin-bottom: 8px; resize: none; }
+        .comp-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+        
+        .admin-requests-list { margin-top: 15px; display: flex; flex-direction: column; gap: 15px; }
+        .request-item { background: rgba(255, 255, 255, 0.08); padding: 12px; border-radius: 10px; border-right: 4px solid #f59e0b; font-size: 13px; text-align: right; }
+        .admin-reply-box { margin-top: 8px; display: flex; gap: 8px; }
+        .admin-reply-box input { flex: 1; padding: 6px 10px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; color: white; font-size: 12px; outline: none; }
+        .reply-btn { background: #38bdf8; color: #0f172a; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; }
+
+        .grades-table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden; }
+        th, td { padding: 12px 10px; text-align: center; font-size: 13px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        th { background: rgba(14, 165, 233, 0.3); color: #38bdf8; font-weight: 600; }
+        td { color: #e2e8f0; }
+        .total-grade { color: #38bdf8; font-weight: bold; }
+        .delete-btn { background: rgba(239, 68, 68, 0.8); color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; }
+        footer { text-align: center; padding: 10px; font-size: 12px; color: #cbd5e1; }
+        @media (min-width: 600px) { .form-grid, .teacher-filter-grid { grid-template-columns: repeat(2, 1fr); } .glass-card { padding: 35px 30px; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="page1.html">سەرەکی</a>
+        <a href="page2.html">ئاگادارییەکان</a>
+        <a href="page3.html">خشتەی ڕۆژانە</a>
+        <a href="page4.html" class="active">نمرەکان</a>
+        <a href="page5.html">داواکارییەکان</a>
+        <a href="index.html" onclick="logoutUser()" style="background: rgba(239, 68, 68, 0.3); color: #f87171;">چوونە دەرەوە</a>
+    </nav>
+
+    <div class="main-container">
+        
+        <!-- کارتی ئەنجام بۆ قوتابی -->
+        <div class="glass-card result-card" id="studentResultCard">
+            <h3 id="resultCardTitle">📊 مەعەدەل و ئەنجامی کۆتایی</h3>
+            <p id="avgText">تکایە چاوەڕێ بکە...</p>
+            <p id="statusText">دۆخ: ---</p>
+
+            <div class="student-complaint-box" id="studentComplaintSection" style="display: none;">
+                <p style="font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #f87171;">⚠️ هەستت بە هەڵە کرد لە نمرەکانت؟ تێبینی بۆ بەڕێوەبەر بنووسە:</p>
+                <textarea id="studentNoteText" placeholder="بۆ نموونە: مامۆستا نمرەی بیرکارییەکەم کەمتر لەوەیە کە هەمبوو..."></textarea>
+                <button class="comp-btn" onclick="sendStudentComplaint()">ناردنی تێبینی</button>
+                <div id="studentReplyView" style="margin-top: 10px; font-size: 12px; text-align: right;"></div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h1 id="pageMainTitle">تۆمارکردنی نمرەکانی قوتابیان</h1>
+            
+            <!-- بەشی زیادکردنی نمرە (تایبەت بە ئەدمین) -->
+            <div class="admin-box" id="adminGradeBox" style="display: none;">
+                <h3>➕ تۆمارکردنی نمرەی نوێ (تایبەت بە بەڕێوەبەر)</h3>
+                <div class="form-grid">
+                    <input type="text" id="studentName" placeholder="ناوی قوتابی (بۆ نموونە: ئارام ئەحمەد)">
+                    <select id="gradeSelect">
+                        <option value="پۆلی 10 (زانستی)">پۆلی 10 زانستی</option>
+                        <option value="پۆلی 10 (وێژەیی)">پۆلی 10 وێژەیی</option>
+                        <option value="پۆلی 11 (زانستی)">پۆلی 11 زانستی</option>
+                        <option value="پۆلی 11 (وێژەیی)">پۆلی 11 وێژەیی</option>
+                        <option value="پۆلی 12 (زانستی)">پۆلی 12 زانستی</option>
+                        <option value="پۆلی 12 (وێژەیی)">پۆلی 12 وێژەیی</option>
+                    </select>
+                    <select id="sectionSelect">
+                        <option value="لقی أ">لقی أ</option>
+                        <option value="لقی ب">لقی ب</option>
+                        <option value="لقی ج">لقی ج</option>
+                        <option value="لقی د">لقی د</option>
+                    </select>
+                    <input type="text" id="subjectName" placeholder="ناوی بابەت (بۆ نموونە: بیرکاری)">
+                    <input type="number" id="dailyMark" placeholder="ڕۆژانە (لە 40)">
+                    <input type="number" id="examMark" placeholder="وەرزی (لە 60)">
+                </div>
+                <button class="add-btn" onclick="addGrade()">تۆمارکردن و ئەژمارکردن</button>
+            </div>
+
+            <!-- بەشی نوێ: ئەدمین دەسەڵاتی دەداتە مامۆستا کە چ پۆل و لقێک ببینێت -->
+            <div class="admin-box" id="adminAssignTeacherBox" style="display: none; border-color: #38bdf8;">
+                <h3>⚙️ دیاریکردنی پۆل و لق بۆ مامۆستا (تایبەت بە بەڕێوەبەر)</h3>
+                <div class="form-grid">
+                    <input type="text" id="assignTeacherName" placeholder="ناوی مامۆستا (بۆ نموونە: مامۆستا عەلی)">
+                    <input type="text" id="assignSubjectName" placeholder="ناوی بابەت (بۆ نموونە: بیرکاری)">
+                    <select id="assignGrade">
+                        <option value="پۆلی 10 (زانستی)">پۆلی 10 زانستی</option>
+                        <option value="پۆلی 10 (وێژەیی)">پۆلی 10 وێژەیی</option>
+                        <option value="پۆلی 11 (زانستی)">پۆلی 11 زانستی</option>
+                        <option value="پۆلی 11 (وێژەیی)">پۆلی 11 وێژەیی</option>
+                        <option value="پۆلی 12 (زانستی)">پۆلی 12 زانستی</option>
+                        <option value="پۆلی 12 (وێژەیی)">پۆلی 12 وێژەیی</option>
+                    </select>
+                    <select id="assignSection">
+                        <option value="لقی أ">لقی أ</option>
+                        <option value="لقی ب">لقی ب</option>
+                        <option value="لقی ج">لقی ج</option>
+                        <option value="لقی د">لقی د</option>
+                    </select>
+                </div>
+                <button class="add-btn" style="background: #10b981; color: white;" onclick="saveTeacherAssignment()">پاشەکەوتکردن و پێدانی دەسەڵات بە مامۆستا</button>
+            </div>
+
+            <!-- بەشی فلتەری مامۆستا (بەپێی ئەوەی ئەدمین بۆی دیاری کردووە) -->
+            <div class="teacher-filter-container" id="teacherFilterBox" style="display: none;">
+                <h3>🔍 پشکنینی نمرەی ئەو پۆل و لق و بابەتانەی کە پێم دراوە</h3>
+                <div id="teacherAssignedList" style="margin-bottom: 10px; font-size: 13px; color: #38bdf8;"></div>
+                <div class="teacher-filter-grid">
+                    <select id="teacherGradeFilter">
+                        <option value="پۆلی 10 (زانستی)">پۆلی 10 زانستی</option>
+                        <option value="پۆلی 10 (وێژەیی)">پۆلی 10 وێژەیی</option>
+                        <option value="پۆلی 11 (زانستی)">پۆلی 11 زانستی</option>
+                        <option value="پۆلی 11 (وێژەیی)">پۆلی 11 وێژەیی</option>
+                        <option value="پۆلی 12 (زانستی)">پۆلی 12 زانستی</option>
+                        <option value="پۆلی 12 (وێژەیی)">پۆلی 12 وێژەیی</option>
+                    </select>
+                    <select id="teacherSectionFilter">
+                        <option value="لقی أ">لقی أ</option>
+                        <option value="لقی ب">لقی ب</option>
+                        <option value="لقی ج">لقی ج</option>
+                        <option value="لقی د">لقی د</option>
+                    </select>
+                    <input type="text" id="teacherSubjectFilter" placeholder="ناوی بابەت بنووسە...">
+                </div>
+                <button class="filter-btn" onclick="applyTeacherFilter()">پیشاندانی نمرەکان</button>
+            </div>
+
+            <!-- بەشی بەڕێوەبەر بۆ بینینی تێبینی قوتابیان -->
+            <div class="admin-box" id="adminStudentNotesBox" style="display: none; border-color: #f59e0b;">
+                <h3>📥 تانە و تێبینییەکانی قوتابیان لەسەر نمرەکان</h3>
+                <div class="admin-requests-list" id="adminStudentNotesContainer"></div>
+            </div>
+
+            <!-- خشتەی نمرەکان -->
+            <div class="grades-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ناوی قوتابی</th>
+                            <th>پۆل و لق</th>
+                            <th>بابەت</th>
+                            <th>ڕۆژانە (40)</th>
+                            <th>وەرزی (60)</th>
+                            <th>کۆی گشتی (100)</th>
+                            <th class="action-th" id="actionThHeader">کردار</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>مافی پارێزراوە &copy; 2026 ئامادەیی بەدرخانی کوڕان</p>
+    </footer>
+
+    <script>
+        function logoutUser() {
+            localStorage.removeItem('currentUserRole');
+            localStorage.removeItem('studentGrade');
+            localStorage.removeItem('studentSection');
+        }
+
+        window.onload = function() {
+            let role = localStorage.getItem('currentUserRole');
+            let savedGrades = localStorage.getItem('schoolGradesPureSystem');
+            if (savedGrades) {
+                document.getElementById('gradesTableBody').innerHTML = savedGrades;
+            }
+
+            if (role === 'student') {
+                document.getElementById('adminGradeBox').style.display = 'none';
+                document.getElementById('adminAssignTeacherBox').style.display = 'none';
+                document.getElementById('teacherFilterBox').style.display = 'none';
+                document.getElementById('adminStudentNotesBox').style.display = 'none';
+                document.querySelectorAll('.delete-td-btn').forEach(btn => btn.style.display = 'none');
+
+                let myGrade = localStorage.getItem('studentGrade');
+                let mySection = localStorage.getItem('studentSection');
+                
+                let rows = document.querySelectorAll('#gradesTableBody tr');
+                let visibleRowsCount = 0; let totalSum = 0; let failedSubjects = [];
+
+                rows.forEach(row => {
+                    if (row.cells && row.cells.length > 1) {
+                        if (row.cells[1].innerText.includes(myGrade) && row.cells[1].innerText.includes(mySection)) {
+                            row.style.display = '';
+                            visibleRowsCount++;
+                            let gVal = parseFloat(row.cells[5].innerText) || 0;
+                            totalSum += gVal;
+                            if (gVal < 50) failedSubjects.push(row.cells[2].innerText);
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+
+                if (visibleRowsCount > 0) {
+                    let avg = (totalSum / visibleRowsCount).toFixed(2);
+                    document.getElementById('avgText').innerHTML = `مەعەدەلەکەت: <b>${avg}</b> (کۆی گشتی: ${totalSum})`;
+                    if (failedSubjects.length === 0) {
+                        document.getElementById('statusText').innerHTML = `دۆخ: <span style="color: #4ade80;">پیرۆزە، دەرچووی! 🎉</span>`;
+                    } else {
+                        document.getElementById('statusText').innerHTML = `دۆخ: <span style="color: #f87171;">دەرنەچووی لەم بابەتانە:</span> <b>${failedSubjects.join(' ، ')}</b>`;
+                    }
+                    document.getElementById('studentComplaintSection').style.display = 'block';
+                    loadStudentReply();
+                } else {
+                    document.getElementById('studentResultCard').style.display = 'none';
+                }
+
+            } else if (role === 'teacher') {
+                document.getElementById('adminGradeBox').style.display = 'none';
+                document.getElementById('adminAssignTeacherBox').style.display = 'none';
+                document.getElementById('adminStudentNotesBox').style.display = 'none';
+                document.getElementById('teacherFilterBox').style.display = 'block';
+                document.getElementById('studentResultCard').style.display = 'none';
+                
+                document.querySelectorAll('.delete-td-btn').forEach(btn => btn.style.display = 'none');
+                if (document.getElementById('actionThHeader')) document.getElementById('actionThHeader').style.display = 'none';
+
+                let assignments = JSON.parse(localStorage.getItem('teacherClassAssignments')) || [];
+                let listDiv = document.getElementById('teacherAssignedList');
+                if (assignments.length > 0) {
+                    listDiv.innerHTML = `<b>📋 پۆل و بابەتە فەرمییەکانت:</b><br>` + assignments.map(a => `- ${a.subject} (${a.grade} - ${a.section})`).join('<br>');
+                } else {
+                    listDiv.innerHTML = `بەڕێوەبەر هێشتا هیچ پۆلێکی بۆت دیاری نەکردووە.`;
+                }
+
+                let rows = document.querySelectorAll('#gradesTableBody tr');
+                rows.forEach(row => row.style.display = 'none');
+
+            } else { // Admin
+                document.getElementById('adminGradeBox').style.display = 'block';
+                document.getElementById('adminAssignTeacherBox').style.display = 'block';
+                document.getElementById('adminStudentNotesBox').style.display = 'block';
+                document.getElementById('teacherFilterBox').style.display = 'none';
+                document.getElementById('studentResultCard').style.display = 'none';
+
+                loadAdminStudentNotes();
+            }
+        }
+
+        function saveTeacherAssignment() {
+            let tName = document.getElementById('assignTeacherName').value.trim();
+            let sub = document.getElementById('assignSubjectName').value.trim();
+            let grade = document.getElementById('assignGrade').value;
+            let section = document.getElementById('assignSection').value;
+
+            if (!tName || !sub) { alert('تکایە هەموو خانەکان پڕ بکەرەوە!'); return; }
+
+            let assignments = JSON.parse(localStorage.getItem('teacherClassAssignments')) || [];
+            assignments.push({ teacher: tName, subject: sub, grade: grade, section: section });
+            localStorage.setItem('teacherClassAssignments', JSON.stringify(assignments));
+            alert(`✅ سەرکەوتووە! پۆل و لقی (${grade} - ${section}) بۆ بابەتی (${sub}) درا بە مامۆستا (${tName}).`);
+            document.getElementById('assignTeacherName').value = '';
+            document.getElementById('assignSubjectName').value = '';
+        }
+
+        function applyTeacherFilter() {
+            let tGrade = document.getElementById('teacherGradeFilter').value;
+            let tSection = document.getElementById('teacherSectionFilter').value;
+            let tSubject = document.getElementById('teacherSubjectFilter').value.trim().toLowerCase();
+
+            if (!tSubject) { alert('تکایە ناوی بابەت بنووسە!'); return; }
+
+            let rows = document.querySelectorAll('#gradesTableBody tr');
+            let matchCount = 0;
+
+            rows.forEach(row => {
+                if (row.cells && row.cells.length > 1) {
+                    let rGradeSec = row.cells[1].innerText.trim();
+                    let rSub = row.cells[2].innerText.trim().toLowerCase();
+
+                    if (rGradeSec.includes(tGrade) && rGradeSec.includes(tSection) && rSub.includes(tSubject)) {
+                        row.style.display = ''; matchCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+
+            if (matchCount === 0) {
+                alert('هیچ نمرەیەک نەدۆزرایەوە بۆ ئەو پۆل و بابەتە!');
+            }
+        }
+
+        function sendStudentComplaint() {
+            let note = document.getElementById('studentNoteText').value.trim();
+            if (!note) { alert('تکایە تێبینی بنووسە!'); return; }
+            let myGrade = localStorage.getItem('studentGrade');
+            let mySection = localStorage.getItem('studentSection');
+            let studentName = prompt("ناوی تەواوی خۆت بنووسە:") || "قوتابی";
+
+            let notesList = JSON.parse(localStorage.getItem('studentGradeNotes')) || [];
+            notesList.unshift({ name: studentName, grade: myGrade + " - " + mySection, note: note, reply: "", date: new Date().toLocaleDateString('ku-IQ') });
+            localStorage.setItem('studentGradeNotes', JSON.stringify(notesList));
+
+            document.getElementById('studentNoteText').value = '';
+            alert('✅ نێردرا بۆ بەڕێوەبەر!');
+            loadStudentReply();
+        }
+
+        function loadStudentReply() {
+            let notesList = JSON.parse(localStorage.getItem('studentGradeNotes')) || [];
+            let replyView = document.getElementById('studentReplyView');
+            let repliedNote = notesList.find(n => n.reply !== "");
+            if (repliedNote && repliedNote.reply) {
+                replyView.innerHTML = `<div style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; padding: 8px; border-radius: 6px;"><b>💬 وەڵامی بەڕێوەبەر:</b> ${repliedNote.reply}</div>`;
+            } else {
+                replyView.innerHTML = `<p style="color: #cbd5e1; font-size: 11px;">چاوەڕێی وەڵام...</p>`;
+            }
+        }
+
+        function loadAdminStudentNotes() {
+            let container = document.getElementById('adminStudentNotesContainer');
+            let notesList = JSON.parse(localStorage.getItem('studentGradeNotes')) || [];
+            if (notesList.length === 0) { container.innerHTML = `<p style="font-size: 12px; color: #cbd5e1;">هیچ تێبینییەک نییە.</p>`; return; }
+
+            container.innerHTML = '';
+            notesList.forEach((item, index) => {
+                let div = document.createElement('div'); div.className = 'request-item';
+                div.innerHTML = `
+                    <p><b>👤 قوتابی:</b> ${item.name} (${item.grade})</p>
+                    <p><b>📝 تێبینی:</b> ${item.note}</p>
+                    <p style="color: #38bdf8; margin-top: 4px;"><b>💬 وەڵام:</b> ${item.reply || "هێشتا نەدراوەتەوە"}</p>
+                    <div class="admin-reply-box">
+                        <input type="text" id="replyStudent_${index}" placeholder="وەڵام بۆ قوتابی...">
+                        <button class="reply-btn" onclick="replyToStudent(${index})">ناردن</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function replyToStudent(index) {
+            let text = document.getElementById(`replyStudent_${index}`).value.trim();
+            if (!text) return;
+            let notesList = JSON.parse(localStorage.getItem('studentGradeNotes'));
+            notesList[index].reply = text;
+            localStorage.setItem('studentGradeNotes', JSON.stringify(notesList));
+            alert('وەڵام درایەوە!'); loadAdminStudentNotes();
+        }
+
+        function addGrade() {
+            let nameInput = document.getElementById('studentName'); let gradeSelect = document.getElementById('gradeSelect'); let sectionSelect = document.getElementById('sectionSelect'); let subjectInput = document.getElementById('subjectName'); let dailyInput = document.getElementById('dailyMark'); let examInput = document.getElementById('examMark');
+            if (!nameInput || !gradeSelect || !sectionSelect || !subjectInput || !dailyInput || !examInput) return;
+            
+            let name = nameInput.value.trim(); let grade = gradeSelect.value; let section = sectionSelect.value; let subject = subjectInput.value.trim();
+            let daily = parseFloat(dailyInput.value); let exam = parseFloat(examInput.value);
+
+            if (name === '' || subject === '' || isNaN(daily) || isNaN(exam) || daily > 40 || daily < 0 || exam > 60 || exam < 0) {
+                alert('تکایە خانەکان بە دروستی پڕ بکەرەوە (ڕۆژانە 0-40، وەرزی 0-60)'); return;
+            }
+
+            let grandTotal = daily + exam;
+            let tbody = document.getElementById('gradesTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `<td>${name}</td><td>${grade} - ${section}</td><td>${subject}</td><td>${daily}</td><td>${exam}</td><td class="total-grade">${grandTotal}</td><td><button class="delete-btn delete-td-btn" onclick="deleteGrade(this)">سڕینەوە</button></td>`;
+            tbody.prepend(newRow);
+            nameInput.value = ''; subjectInput.value = ''; dailyInput.value = ''; examInput.value = '';
+            saveToLocalStorage();
+        }
+
+        function deleteGrade(button) {
+            let row = button.closest('tr');
+            if (row) { row.remove(); saveToLocalStorage(); }
+        }
+        function saveToLocalStorage() {
+            let tbodyHtml = document.getElementById('gradesTableBody').innerHTML;
+            localStorage.setItem('schoolGradesPureSystem', tbodyHtml);
+        }
+    </script>
+</body>
+</html>

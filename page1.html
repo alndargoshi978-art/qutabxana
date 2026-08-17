@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ئامادەیی بەدرخانی کوڕان - سەرەکی</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(15, 30, 40, 0.75), rgba(10, 20, 30, 0.85)), url('school.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            color: white;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 16px;
+            max-width: 600px;
+            margin: 10px auto;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 6px 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: #38bdf8;
+        }
+
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            margin: auto;
+            padding: 15px 0;
+        }
+
+        .glass-card {
+            background: rgba(20, 50, 65, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .glass-card h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .glass-card h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #38bdf8;
+        }
+
+        .glass-card p {
+            line-height: 1.8;
+            font-size: 14px;
+            color: #e2e8f0;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        @media (min-width: 600px) {
+            .glass-card {
+                padding: 40px 30px;
+            }
+            .glass-card h1 {
+                font-size: 32px;
+            }
+            .glass-card h2 {
+                font-size: 20px;
+            }
+            .glass-card p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+       <nav>
+        <a href="page1.html">سەرەکی</a>
+        <a href="page2.html">ئاگاداریەکان</a>
+        <a href="page3.html">خشتەی ڕۆژانە</a>
+       <a href="page4.html">نمرەکان</a>
+        <a href="page5.html">داواکارییەکانی مامۆستایان</a>
+        <a href="index.html" onclick="logoutUser()" style="background: rgba(239, 68, 68, 0.3); color: #f87171;">چوونە دەرەوە</a>
+    </nav>
+    </nav>
+
+    <div class="main-container">
+        <div class="glass-card">
+            <h1>ئامادەیی بەدرخانی کوڕان</h1>
+            <h2>بەخێر هاتن قوتابیانی خۆشەویست</h2>
+            <p>ئەم پلاتفۆرمە دروستکراوە بۆ ئاسانکاری پرۆسەی خوێندن، بڵاوکردنەوەی ئاگادارییە گرنگەکان و خشتەی پۆلەکان بۆ قوتابیانی خۆشەویست.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>مافی پارێزراوە بۆ ئامادەیی بەدرخانی کوران</p>
+    </footer>
+    <script>
+        function logoutUser() {
+            // پاککردنەوەی زانیارییەکانی بەکارهێنەر لە memoryـی براوسەردا
+            localStorage.removeItem('currentUserRole');
+            localStorage.removeItem('studentGrade');
+            localStorage.removeItem('studentSection');
+        }
+    </script>
+
+</body>
+</html>

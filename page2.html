@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ئاگادارییەکان - ئامادەیی بەدرخانی کوڕان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(15, 30, 40, 0.75), rgba(10, 20, 30, 0.85)), url('school.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            color: white;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 16px;
+            max-width: 700px;
+            margin: 10px auto;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 6px 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.25);
+            color: #38bdf8;
+        }
+
+        .main-container {
+            max-width: 850px;
+            width: 100%;
+            margin: auto;
+            padding: 10px 0;
+        }
+
+        .glass-card {
+            background: rgba(20, 50, 65, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px 20px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #38bdf8;
+            text-align: center;
+        }
+
+        .admin-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+
+        .admin-box h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .admin-box textarea {
+            width: 100%;
+            height: 90px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 13px;
+            outline: none;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .admin-box textarea::placeholder {
+            color: #cbd5e1;
+        }
+
+        .add-btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .notices-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .notice-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-right: 4px solid #38bdf8;
+            padding: 15px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .notice-item p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+
+        .notice-date {
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="page1.html">سەرەکی</a>
+        <a href="page2.html" class="active">ئاگادارییەکان</a>
+        <a href="page3.html">خشتەی ڕۆژانە</a>
+        <a href="page4.html">نمرەکان</a>
+        <a href="page5.html">داواکارییەکانی مامۆستایان</a>
+        <a href="index.html" onclick="logoutUser()" style="background: rgba(239, 68, 68, 0.3); color: #f87171;">چوونە دەرەوە</a>
+    </nav>
+
+    <div class="main-container">
+        <div class="glass-card">
+            <h1>ئاگاداری و بڕیارەکانی قوتابخانە</h1>
+            
+            <!-- بەشی زیادکردنی ئاگاداری تەنها بۆ ئەدمین -->
+            <div class="admin-box" id="adminNoticeBox" style="display: none;">
+                <h3>➕ بڵاوکردنەوەی ئاگاداری یان بڕیاری نوێ</h3>
+                <textarea id="noticeText" placeholder="دەقی ئاگادارییەکە لێرە بنووسە..."></textarea>
+                <button class="add-btn" onclick="addNotice()">بڵاوکردنەوە</button>
+            </div>
+
+            <!-- لیستی ئاگادارییەکان بۆ مامۆستا و قوتابی و ئەدمین -->
+            <div class="notices-list" id="noticesContainer">
+                <!-- ئاگادارییەکان لێرە دەردەکەون -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>مافی پارێزراوە &copy; 2026 ئامادەیی بەدرخانی کوڕان</p>
+    </footer>
+
+    <script>
+        function logoutUser() {
+            localStorage.removeItem('currentUserRole');
+            localStorage.removeItem('studentGrade');
+            localStorage.removeItem('studentSection');
+        }
+
+        window.onload = function() {
+            let role = localStorage.getItem('currentUserRole');
+
+            // ئەگەر ئەدمین بوو، فۆرمی زیادکردن دەردەکەوێت
+            if (role === 'admin') {
+                let adminBox = document.getElementById('adminNoticeBox');
+                if (adminBox) adminBox.style.display = 'block';
+            }
+
+            loadNotices();
+        }
+
+        function addNotice() {
+            let text = document.getElementById('noticeText').value.trim();
+            if (text === '') {
+                alert('تکایە دەقی ئاگادارییەکە بنووسە!');
+                return;
+            }
+
+            let dateNow = new Date().toLocaleDateString('ku-IQ');
+            let notices = JSON.parse(localStorage.getItem('schoolNoticesList')) || [];
+            
+            notices.unshift({ text: text, date: dateNow });
+            localStorage.setItem('schoolNoticesList', JSON.stringify(notices));
+
+            document.getElementById('noticeText').value = '';
+            loadNotices();
+        }
+
+        function loadNotices() {
+    let container = document.getElementById('noticesContainer');
+    let notices = JSON.parse(localStorage.getItem('schoolNoticesList')) || [];
+    let role = localStorage.getItem('currentUserRole');
+
+    if (notices.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: #cbd5e1; padding: 20px;">هیچ ئاگادارییەک تا ئێستا بڵاو نەکراوەتەوە.</p>`;
+        return;
+    }
+    container.innerHTML = '';
+    notices.forEach((notice, index) => {
+        let div = document.createElement('div');
+        div.className = 'notice-item';
+        
+        let deleteButtonHTML = (role === 'admin') ? `<button class="delete-btn" onclick="deleteNotice(${index})">سڕینەوە</button>` : '';
+
+        div.innerHTML = `
+            <p>${notice.text}</p>
+            <span class="notice-date">📅 ڕێکەوت: ${notice.date}</span>
+            ${deleteButtonHTML}
+        `;
+        container.appendChild(div);
+    });
+}
+
+        function deleteNotice(index) {
+            let notices = JSON.parse(localStorage.getItem('schoolNoticesList')) || [];
+            notices.splice(index, 1);
+            localStorage.setItem('schoolNoticesList', JSON.stringify(notices));
+            loadNotices();
+        }
+    </script>
+</body>
+</html>
